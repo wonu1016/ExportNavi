@@ -1,0 +1,10 @@
+.gradle
+build
+.env
+.env.*
+!.env.example
+.git
+.git-backup-before-root-repo
+.idea
+.DS_Store
+HELP.md
