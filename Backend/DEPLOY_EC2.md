@@ -70,3 +70,35 @@ https://api.exportnavi.com/login/oauth2/code/google
 ```
 
 For temporary direct EC2 testing without HTTPS, OAuth will usually be painful. Use the API domain with HTTPS for the final login flow.
+
+## 7. GitHub Actions backend deploy
+
+The repository includes a manual deploy workflow:
+
+```txt
+.github/workflows/deploy-backend-ec2.yml
+```
+
+Add these GitHub repository secrets before running it:
+
+```txt
+EC2_HOST=your-ec2-public-ip-or-domain
+EC2_USER=ubuntu
+EC2_SSH_KEY=your-private-ssh-key
+```
+
+The workflow uploads the project to:
+
+```txt
+~/exportnavi
+```
+
+Before the first workflow deploy, create the production env file on EC2:
+
+```bash
+mkdir -p ~/exportnavi/Backend
+cd ~/exportnavi/Backend
+nano .env.production
+```
+
+Use the same values from `Backend/.env.production.example`.
