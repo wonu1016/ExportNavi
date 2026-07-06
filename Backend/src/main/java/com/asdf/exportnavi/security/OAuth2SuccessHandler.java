@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +28,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     @Value("${app.auth.cookie.secure:false}")
     private boolean secureCookie;
+
+    @Value("${app.auth.cookie.same-site:Lax}")
+    private String cookieSameSite;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -46,13 +51,14 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         ResponseCookie cookie = ResponseCookie.from("exportnavi_token", token)
                 .httpOnly(true)
                 .secure(secureCookie)
-                .sameSite("Lax")
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(24 * 60 * 60)
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        response.sendRedirect(frontendUrl + "/oauth/callback");
+        String encodedToken = URLEncoder.encode(token, StandardCharsets.UTF_8);
+        response.sendRedirect(frontendUrl + "/oauth/callback?token=" + encodedToken);
     }
 
     private String safeAttr(String value, String fallback) {

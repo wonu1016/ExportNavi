@@ -32,6 +32,9 @@ public class AuthController {
     @Value("${app.auth.cookie.secure:false}")
     private boolean secureCookie;
 
+    @Value("${app.auth.cookie.same-site:Lax}")
+    private String cookieSameSite;
+
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDto request,
                                     HttpServletResponse response) {
@@ -60,7 +63,8 @@ public class AuthController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from("exportnavi_token", "")
                 .httpOnly(true)
-                .sameSite("Lax")
+                .secure(secureCookie)
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(0)
                 .build();
@@ -73,7 +77,7 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie.from("exportnavi_token", token)
                 .httpOnly(true)
                 .secure(secureCookie)
-                .sameSite("Lax")
+                .sameSite(cookieSameSite)
                 .path("/")
                 .maxAge(rememberMe ? 24 * 60 * 60 : -1)
                 .build();

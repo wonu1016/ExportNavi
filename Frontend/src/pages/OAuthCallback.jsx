@@ -1,10 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setToken } from '../api/client';
 
 export default function OAuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    if (token) {
+      setToken(token);
+      window.history.replaceState(null, '', '/oauth/callback');
+    }
     navigate('/', { replace: true });
   }, [navigate]);
 
