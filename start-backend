@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+BACKEND_DIR="$ROOT_DIR/Backend"
+BACKEND_PORT=8082
+GRADLE_HOME="$BACKEND_DIR/.gradle"
+
+if command -v lsof >/dev/null 2>&1; then
+  if lsof -tiTCP:"$BACKEND_PORT" -sTCP:LISTEN >/dev/null 2>&1; then
+    echo "Port $BACKEND_PORT is already in use."
+    echo "Stop the previous backend process first, then run this script again."
+    exit 1
+  fi
+fi
+
+cd "$BACKEND_DIR"
+if [ -f .env ]; then
+  set -a
+  . ./.env
+  set +a
+fi
+GRADLE_USER_HOME="$GRADLE_HOME" exec ./gradlew bootRun

@@ -1,0 +1,30 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Local environment secrets
+.env
+.env.*.local
+*.pem
+*.key
+
+# Frontend
+Frontend/node_modules/
+Frontend/dist/
+Frontend/dist-ssr/
+Frontend/*.local
+
+# Backend / Gradle
+Backend/.gradle/
+Backend/build/
+!Backend/gradle/wrapper/gradle-wrapper.jar
+
+# Nested repository backup
+Backend/.git-backup-before-root-repo/
+
+# Generated/local documents
+ExportNavi_프로젝트_기획서.docx

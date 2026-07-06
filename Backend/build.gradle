@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.asdf'
+version = '0.0.1-SNAPSHOT'
+description = 'ExportNavi'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Web + REST API + JSON (Jackson)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+
+    // JPA (Entity, Repository)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // WebClient (LLM API 호출용 - Claude/GPT, 공공데이터 API)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Validation (@Valid, @NotBlank 등)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // 파일 텍스트 추출 (PDF, DOCX, 텍스트 등)
+    implementation 'org.apache.tika:tika-core:2.9.2'
+    implementation 'org.apache.tika:tika-parsers-standard-package:2.9.2'
+
+    // OAuth2 + Security (Google 로그인)
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // H2 (개발/시연용 인메모리 DB)
+    runtimeOnly 'com.h2database:h2'
+
+    // MySQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

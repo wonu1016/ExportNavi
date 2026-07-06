@@ -1,0 +1,71 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f5f6f7;
+  --color-bg-dark: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #f1f3f5;
+
+  --color-line: #d7dce2;
+  --color-grid: #e5e8ec;
+
+  --color-text: #20262d;
+  --color-text-sub: #59636e;
+  --color-text-faint: #87909a;
+
+  --color-green: #1d4f7a;
+  --color-yellow: #c58b18;
+  --color-teal: #008e92;
+  --color-cyan: #2576d2;
+  --color-orange: #df6c2f;
+  --color-red: #d54848;
+
+  --font-serif: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+}
+
+html { background: #f5f6f7; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f5f6f7;
+  color: #20262d;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #d7e5f2;
+  color: #173b5d;
+}
+
+.font-serif { font-family: var(--font-serif); }
+
+button, a, input, textarea { border-radius: 8px; }
+
+input, textarea { box-shadow: 0 1px 2px rgb(20 33 61 / 0.03); }
+
+.surface-shadow, .soft-shadow { box-shadow: none; }
+
+@media (max-width: 720px) {
+  .responsive-table-head { display: none; }
+  .responsive-table-row {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 10px 16px;
+    padding: 18px !important;
+  }
+}
+
+@media print {
+  header, .print\:hidden { display: none !important; }
+  body, html { background: white !important; }
+  section { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
